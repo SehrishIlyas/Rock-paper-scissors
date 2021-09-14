@@ -41,7 +41,6 @@ def choice_result(human_choice, computer_choice):
         HUMAN_SCORE = HUMAN_SCORE + 1
         print('Human Wins!')
 
-
 # Handler for mouse click on rock button.
 def rock():
     global human_choice, computer_choice
@@ -69,30 +68,37 @@ def scissors():
     computer_choice = random_computer_choice()
     choice_result(computer_choice, human_choice)
 
+def endgame():
+    global HUMAN_SCORE, COMPUTER_SCORE
+    if HUMAN_SCORE == COMPUTER_SCORE:
+        return("Tie")
+    elif HUMAN_SCORE > COMPUTER_SCORE:
+        return("Human Won!")
+    else:
+        return("Computer Won!")
+        
 # Handler to draw on canvas
-def draw(canvas):
-    
+def draw(canvas):    
     try:
         # Draw choices
-        canvas.draw_text("Human: " + human_choice, [15,40], 30, "Green")
-        canvas.draw_text("Comp: " + computer_choice, [15,80], 30, "White")
+        canvas.draw_text("Human: " + human_choice, [15,50], 35, "Blue")
+        canvas.draw_text("Computer: " + computer_choice, [15,100], 35, "White")
         
         # Draw scores
-        canvas.draw_text("Human Score: " + str(HUMAN_SCORE), [15,140], 30, "Green")
-        canvas.draw_text("Comp Score: " + str(COMPUTER_SCORE), [15,180], 30, "White")
+        canvas.draw_text("Human Score: " + str(HUMAN_SCORE), [15,170], 35, "Blue")
+        canvas.draw_text("Computer Score: " + str(COMPUTER_SCORE), [15,220], 35, "White")
         
+        canvas.draw_text("Result: "+ endgame(), [15, 300], 35, "Blue")
     except TypeError:
         pass
     
-
 # Create a frame and assign callbacks to event handlers
 def play_rps():
-    frame = simplegui.create_frame("Rock-Paper-Scissors", 300, 300)
+    frame = simplegui.create_frame("Rock-Paper-Scissors", 350, 350)
     frame.add_button("Rock", rock, 80)
     frame.add_button("Paper", paper, 80)
     frame.add_button("Scissors", scissors, 80)
     frame.set_draw_handler(draw)
-    # Start the frame animation
     frame.start()
  
 play_rps()
